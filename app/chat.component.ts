@@ -1,4 +1,7 @@
 import {Component} from 'angular2/core';
+import {ChatService, Message} from './chat.service';
+
+const CHAT_URL = 'http://localhost:8080/chat'
 
 @Component({
     selector: 'chat',
@@ -11,8 +14,13 @@ import {Component} from 'angular2/core';
     `,
     directives: [],
 })
-
 export class Chat {
     private messages: string[];
 
+    constructor(private chatService: ChatService) {
+        chatService.connect(CHAT_URL);
+        chatService.chat.subscribe((message: Message) => {
+            console.log(message);
+        })
+    }
 }
