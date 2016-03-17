@@ -12,8 +12,6 @@ export class ChatService {
 	public chat: Subject<Message>;
 
 	connect(url): void {
-		this.chat = Observable.webSocket({
-			url: url
-		});
+		this.chat = new Subject();
 	}
 }
