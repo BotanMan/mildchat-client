@@ -1,8 +1,9 @@
-import {Component} from 'angular2/core';
-import {Navbar} from './navbar.component';
-import {Chat} from './chat.component';
-import {CreateMessage} from './create-message.component';
 import {ChatService} from './chat.service'
+import {Chat} from './chat.component';
+import {Component} from 'angular2/core';
+import {CreateMessage} from './create-message.component';
+import {Navbar} from './navbar.component';
+import {WebSocketService} from './websocket.service';
 
 @Component({
     selector: 'app',
@@ -12,7 +13,7 @@ import {ChatService} from './chat.service'
         <create-message></create-message>
     `,
     directives: [Navbar, Chat, CreateMessage],
-    providers: [ChatService],
+    providers: [ChatService, WebSocketService],
 })
 
 export class AppComponent {}

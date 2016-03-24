@@ -1,7 +1,6 @@
-import {Component} from 'angular2/core';
 import {ChatService} from './chat.service';
-
-const CHAT_URL = 'http://localhost:8080/chat'
+import {Component} from 'angular2/core';
+import {Subject} from 'rxjs/Rx'
 
 @Component({
     selector: 'chat',
@@ -13,14 +12,14 @@ const CHAT_URL = 'http://localhost:8080/chat'
         </div>
     `,
     directives: [],
+    providers: [ChatService]
 })
 export class Chat {
     private messages: string[];
 
     constructor(private chatService: ChatService) {
-        // chatService.connect(CHAT_URL);
-        // chatService.chat.subscribe((message: Message) => {
-        //     console.log(message);
-        // })
+        chatService.messages.subscribe(msg => {
+            this.messages.push(msg.message);
+        });
     }
 }

@@ -1,5 +1,5 @@
+import Rx from 'rxjs/Rx';
 import {Injectable} from 'angular2/core';
-import {Observable, Observer, Subject} from 'rxjs/Rx';
 
 export interface Message {
 	author: string;
@@ -8,10 +8,10 @@ export interface Message {
 
 @Injectable()
 export class WebSocketService {
-	connect(url): Subject<Message> {
+	connect(url): Rx.Subject<Message> {
 		let ws = new WebSocket(url);
 
-		let observable = Observable.create((obs: Observer<Message>) => {
+		let observable = Rx.Observable.create((obs: Rx.Observer<Message>) => {
 			ws.onmessage = obs.next.bind(obs);
 			ws.onerror = obs.error.bind(obs);
 			ws.onclose = obs.complete.bind(obs);
@@ -27,6 +27,6 @@ export class WebSocketService {
 			},
 		};
 
-		return Subject.create(observer, observable);
+		return Rx.Subject.create(observer, observable);
 	}
 }
