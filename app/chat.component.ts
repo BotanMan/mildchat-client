@@ -1,4 +1,4 @@
-import {ChatService} from './chat.service';
+import {ChatService, Message} from './chat.service';
 import {Component} from 'angular2/core';
 import {Subject} from 'rxjs/Rx'
 
@@ -7,7 +7,7 @@ import {Subject} from 'rxjs/Rx'
     template: `
         <div class="wrapper">
             <div class="messages">
-                <message></message>
+                <p *ngFor="#msg of messages">{{ msg.message }}</p>
             </div>
         </div>
     `,
@@ -15,11 +15,11 @@ import {Subject} from 'rxjs/Rx'
     providers: [ChatService]
 })
 export class Chat {
-    private messages: string[];
+    private messages: Message[] = new Array();
 
     constructor(private chatService: ChatService) {
         chatService.messages.subscribe(msg => {
-            this.messages.push(msg.message);
+            this.messages.push(msg);
         });
     }
 }

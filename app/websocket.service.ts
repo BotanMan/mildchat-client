@@ -8,11 +8,21 @@ export interface Message {
 
 @Injectable()
 export class WebSocketService {
-	connect(url): Rx.Subject<Message> {
+	private subject: Rx.Subject<Message>;
+
+	public connect(url): Rx.Subject<Message> {
+		if(!this.subject) {
+			this.subject = this.create(url);
+		}
+
+		return this.subject;
+	}
+
+	private create(url): Rx.Subject<Message> {
 		let ws = new WebSocket(url);
 
 		let observable = Rx.Observable.create((obs: Rx.Observer<Message>) => {
-			ws.onmessage = obs.next.bind(obs);
+			ws.onmessage = (evt: MessageEvent) => obs.next(this.transformResponse(evt));
 			ws.onerror = obs.error.bind(obs);
 			ws.onclose = obs.complete.bind(obs);
 
@@ -22,11 +32,22 @@ export class WebSocketService {
 		let observer = {
 			next: (data: Message) => {
 				if (ws.readyState === WebSocket.OPEN) {
-					ws.send(data);
+					ws.send(JSON.stringify(data));
 				}
 			},
 		};
 
 		return Rx.Subject.create(observer, observable);
+	}
+
+	private transformResponse(response: MessageEvent): Message {
+		let data = JSON.parse(response.data);
+
+		let message = {
+			author: data.author,
+			message: data.message,
+		}
+
+		return message;
 	}
 }
