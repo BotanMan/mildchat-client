@@ -1,14 +1,12 @@
 import {ChatService, Message} from './chat.service';
-import {Component} from 'angular2/core';
+import {Component, ElementRef} from 'angular2/core';
 import {Subject} from 'rxjs/Rx'
 
 @Component({
     selector: 'chat',
     template: `
-        <div class="wrapper">
-            <div class="messages">
-                <p *ngFor="#msg of messages">{{ msg.message }}</p>
-            </div>
+        <div class="messages">
+            <p *ngFor="#msg of messages; #last = last">{{ msg.message }}</p>
         </div>
     `,
     directives: [],

@@ -8,9 +8,11 @@ import {WebSocketService} from './websocket.service';
 @Component({
     selector: 'app',
     template: `
-        <navbar></navbar>
-        <chat></chat>
-        <create-message></create-message>
+        <div class="wrapper">
+            <navbar></navbar>
+            <chat></chat>
+            <create-message></create-message>
+        </div>
     `,
     directives: [Navbar, Chat, CreateMessage],
     providers: [ChatService, WebSocketService],

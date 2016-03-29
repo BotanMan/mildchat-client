@@ -16,13 +16,13 @@ export class ChatService {
     constructor(wsService: WebSocketService) {
 
         this.messages = <Subject<Message>>wsService
-        	.connect(CHAT_URL)
-			.map((response: MessageEvent): Message => {
-				let data = JSON.parse(response.data);
-				return {
-					author: data.author,
-					message: data.message,
-				}
-			});
+            .connect(CHAT_URL)
+            .map((response: MessageEvent): Message => {
+                let data = JSON.parse(response.data);
+                return {
+                    author: data.author,
+                    message: data.message,
+                }
+            });
     }
 }

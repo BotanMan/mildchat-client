@@ -28,8 +28,20 @@ header
     border-bottom: 2px solid #47b8e0;
 }
 
-chat > .wrapper {
-    height: 12px;
-    flex-grow: 1;
+.wrapper {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
 }
 
+navbar, chat, create-message {
+    display: block;
+}
+
+chat { overflow-y: scroll; flex: 1; }
+
+create-message {
+    margin: 10px 0;
+}
